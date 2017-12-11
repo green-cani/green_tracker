@@ -91,14 +91,15 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
 
 function register_user (user_id,username){
   pg.connect(process.env.DATABASE_URL, function(err,client,done) {
-    client.query( 'insert into users values('+user_id+','+username');' ,function(err,result) {
-      done();
-      if(err){
-        console.error(err); response.send("Error " + err); 
-      }
-      else{
-        response.render('pages/db',{results: result.rows} ); 
-      }
-    });
+    var query_text = 'insert into users values('+user_id+','+username');' ;
+      client.query(query_text, function(err,result) {
+        done();
+        if(err){
+          console.error(err); response.send("Error " + err); 
+        }
+        else{
+          response.render('pages/db',{results: result.rows} ); 
+        }
+      });
   });
 }
