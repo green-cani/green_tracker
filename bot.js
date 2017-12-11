@@ -47,6 +47,7 @@ bot.onText(/^\/start$/, function (msg, match){
 bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   const action = callbackQuery.data;
   const msg = callbackQuery.message;
+  console.log(callbackQuery);
   const opts = {
     chat_id: msg.chat.id,
     message_id: msg.message_id,

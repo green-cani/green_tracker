@@ -1,5 +1,5 @@
 {
-  "name": "valipour_tutorial",
+  "name": "green-tracker",
   "version": "1.0.0",
   "description": "http://mvalipour.github.io/node.js/2015/11/10/build-telegram-bot-nodejs-heroku",
   "main": "index.js",
