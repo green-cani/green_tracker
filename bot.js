@@ -1,4 +1,5 @@
 var token = '502137753:AAHDcKtIgwSFJQTmMiqnf2846avclZIqSA8';
+var pg = require('pg');
 
 var Bot = require('node-telegram-bot-api'),
     bot = new Bot(token, { polling: true } );
@@ -78,7 +79,7 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
     bot.sendMessage(msg.chat.id, "Select option", option); 
   }
   if (action === 'write_ids') {
-    text = 'chat_id' + chat_id + "\nmessage_id" + message_id;
+    text = 'chat_id' + msg.chat.id + "\nmessage_id" + msg.message_id;
     bot.editMessageText(text, opts);
     bot.sendMessage(msg.chat.id, "Select option", option); 
   }
