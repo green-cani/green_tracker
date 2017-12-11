@@ -82,7 +82,7 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   if (action === 'dummy'){
   }
   if (action === 'write_ids') {
-    text = 'chat_id' + msg.chat.id + "\nmessage_id" + msg.message_id;
+    text = 'chat_id' + callbackQuery.from.id + "\nmessage_id" + callbackQuery.from.username;
     bot.editMessageText(text, opts);
     bot.sendMessage(msg.chat.id, "Select option", option); 
   }
@@ -91,7 +91,7 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
 
 function register_user (user_id,username){
   pg.connect(process.env.DATABASE_URL, function(err,client,done) {
-    var query_text = 'insert into users values('+user_id+','+username+');' ;
+    var query_text = 'insert into users values('+user_id+',\''+username+'\');' ;
       client.query(query_text, function(err,result) {
         done();
         if(err){
