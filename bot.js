@@ -27,10 +27,10 @@ bot.onText(/^\/sum((\s+\d+)+)$/, function (msg, match) {
 var option = {
   reply_markup: JSON.stringify({
     inline_keyboard: [
-      [{ text: 'Some button text 1', callback_data: '1' }],
+      [{ text: '! First time? !', callback_data: 'register_user' }],
+      [{ text: 'Insert value', callback_data: 'dummy' }],
       [{ text: 'Some button text 2', callback_data: '2' }],
       [{ text: 'Some button text 3', callback_data: '3' }],
-      [{ text: 'Register user', callback_data: 'register_user' }],
       [{ text: 'Write ids', callback_data: 'write_ids' }],
       [{ text: 'END', callback_data: 'end' }]
     ]
@@ -74,10 +74,12 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
     bot.sendMessage(msg.chat.id, "Select option", option); 
   }
   if (action === 'register_user') {
-    register_user();
+    register_user(callbackQuery.from.id,callbackQuery.from.username);
     text = 'Now registering your name :)';
     bot.editMessageText(text, opts);
     bot.sendMessage(msg.chat.id, "Select option", option); 
+  }
+  if (action === 'dummy'){
   }
   if (action === 'write_ids') {
     text = 'chat_id' + msg.chat.id + "\nmessage_id" + msg.message_id;
@@ -87,9 +89,9 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
 });
 
 
-function register_user (){
+function register_user (user_id,username){
   pg.connect(process.env.DATABASE_URL, function(err,client,done) {
-    client.query('SELECT * FROM test_table',function(err,result) {
+    client.query( 'insert into users values('+user_id+','+username');' ,function(err,result) {
       done();
       if(err){
         console.error(err); response.send("Error " + err); 
