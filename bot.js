@@ -1,9 +1,9 @@
 var token = '502137753:AAHDcKtIgwSFJQTmMiqnf2846avclZIqSA8';
-var pg = require('pg');
 
 var Bot = require('node-telegram-bot-api'),
     bot = new Bot(token, { polling: true } );
 
+var pg = require('pg');
 // event listener
 bot.onText(/^\/say_hello (.+)$/, function(msg, match){
   var name = match[1];
@@ -36,7 +36,7 @@ var option = {
 
 bot.onText(/^\/start$/, function (msg, match){
   bot.sendMessage(msg.chat.id, 'START!').then(function () {
-    bot.sendMessage(msg.chat.id, "Select option", option); 
+    bot.sendMessage(msg.chat.id, "Select option", option);
   });
 });
 
@@ -51,28 +51,28 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   if (action === 'end') {
     text = 'Ended';
     bot.editMessageText(text, opts);
-    bot.sendMessage(msg.chat.id, "END"); 
+    bot.sendMessage(msg.chat.id, "END");
   }
   if (action === '1') {
     text = 'You hit button 1';
     bot.editMessageText(text, opts);
-    bot.sendMessage(msg.chat.id, "Select option", option); 
+    bot.sendMessage(msg.chat.id, "Select option", option);
   }
   if (action === '2') {
     text = 'You hit button 2';
     bot.editMessageText(text, opts);
-    bot.sendMessage(msg.chat.id, "Select option", option); 
+    bot.sendMessage(msg.chat.id, "Select option", option);
   }
   if (action === '3') {
     text = 'You hit button 3';
     bot.editMessageText(text, opts);
-    bot.sendMessage(msg.chat.id, "Select option", option); 
+    bot.sendMessage(msg.chat.id, "Select option", option);
   }
   if (action === 'register_user') {
     register_user(callbackQuery.from.id,callbackQuery.from.username);
     text = 'Now registering your name :)';
     bot.editMessageText(text, opts);
-    bot.sendMessage(msg.chat.id, "Select option", option); 
+    bot.sendMessage(msg.chat.id, "Select option", option);
   }
   if (action === 'dummy'){
     register_action(callbackQuery.from.id,'dummy');
@@ -89,7 +89,7 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   if (action === 'write_ids') {
     text = 'chat_id' + callbackQuery.from.id + "\nmessage_id" + callbackQuery.from.username;
     bot.editMessageText(text, opts);
-    bot.sendMessage(msg.chat.id, "Select option", option); 
+    bot.sendMessage(msg.chat.id, "Select option", option);
   }
 });
 
@@ -100,10 +100,10 @@ function register_user (user_id,username){
       client.query(query_text, function(err,result) {
         done();
         if(err){
-          console.error(err); response.send("Error " + err); 
+          console.error(err); response.send("Error " + err);
         }
         else{
-          response.render('pages/db',{results: result.rows} ); 
+          response.render('pages/db',{results: result.rows} );
         }
       });
   });
@@ -124,26 +124,3 @@ function register_action (user_id,action){
     });
   });
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
