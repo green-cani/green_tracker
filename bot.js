@@ -28,9 +28,8 @@ var option = {
   reply_markup: JSON.stringify({
     inline_keyboard: [
       [{ text: '! First time? !', callback_data: 'register_user' }],
-      [{ text: 'Insert value', callback_data: 'dummy' }],
-      [{ text: 'Some button text 2', callback_data: '2' }],
-      [{ text: 'Some button text 3', callback_data: '3' }],
+      [{ text: 'dummy', callback_data: 'dummy' }],
+      [{ text: 'joke', callback_data: 'joke' }],
       [{ text: 'Write ids', callback_data: 'write_ids' }],
       [{ text: 'END', callback_data: 'end' }]
     ]
@@ -80,6 +79,16 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
     bot.sendMessage(msg.chat.id, "Select option", option); 
   }
   if (action === 'dummy'){
+    register_action(callbackQuery.from.id,'dummy');
+    text = 'Sto registrando...';
+    bot.editMessageText(text,opts);
+    bot.sendMessage(msg.chat.id,"Select option",option);
+  }
+  if (action === 'joke'){
+    register_action(callbackQuery.from.id,'joke');
+    text = 'Sto registrando...';
+    bot.editMessageText(text,opts);
+    bot.sendMessage(msg.chat.id,"Select option",option);
   }
   if (action === 'write_ids') {
     text = 'chat_id' + callbackQuery.from.id + "\nmessage_id" + callbackQuery.from.username;
@@ -103,3 +112,41 @@ function register_user (user_id,username){
       });
   });
 }
+
+function register_action (user_id,action){
+  pg.connect(process.env.DATABASE_URL, function(err,client,done){
+    var query_text = 'insert into habits values('+user_id+',\'now\',\''+action+'\');';
+    client.query(query_text, function(err,result){
+      done();
+      if(err){
+        console.error(err); response.send("Error " + err);
+      }
+      else{
+        response.render('pages/db',{results: result.rows} );
+      }
+    });
+  });
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
