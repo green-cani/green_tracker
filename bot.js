@@ -112,6 +112,7 @@ function register_user (user_id,username){
 function register_action (user_id,action){
   pg.connect(process.env.DATABASE_URL, function(err,client,done){
     var query_text = 'insert into habits values('+user_id+',\'now\',\''+action+'\');';
+    console.log(client);
     client.query(query_text, function(err,result){
       done();
       if(err){
