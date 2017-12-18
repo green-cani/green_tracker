@@ -1,9 +1,9 @@
 var express = require('express');
 var packageInfo = require('./package.json');
 
-
-
 var app = express();
+
+app.set('port', (process.env.PORT || 5000));
 
 app.get('/', function (req, res) {
   res.json({ version: packageInfo.version });
@@ -15,5 +15,3 @@ var server = app.listen(process.env.PORT, function () {
 
   console.log('Web server started at http://%s:%s', host, port);
 });
-
-
