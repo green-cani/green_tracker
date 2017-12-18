@@ -4,8 +4,6 @@ var pg = require('pg');
 var Bot = require('node-telegram-bot-api'),
     bot = new Bot(token, { polling: true } );
 
-console.log('bot server started... CANI.');
-
 // event listener
 bot.onText(/^\/say_hello (.+)$/, function(msg, match){
   var name = match[1];
@@ -38,7 +36,6 @@ var option = {
 
 bot.onText(/^\/start$/, function (msg, match){
   bot.sendMessage(msg.chat.id, 'START!').then(function () {
-    console.log('start');
     bot.sendMessage(msg.chat.id, "Select option", option); 
   });
 });
@@ -46,7 +43,6 @@ bot.onText(/^\/start$/, function (msg, match){
 bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   const action = callbackQuery.data;
   const msg = callbackQuery.message;
-  console.log(callbackQuery);
   const opts = {
     chat_id: msg.chat.id,
     message_id: msg.message_id,
