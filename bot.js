@@ -93,26 +93,33 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   }
 });
 
+/*
+problema: registrazione stesso dato due volte.
+inserire eccezione stesso utente
 
+ */
 function register_user (user_id,username){
   pg.connect(process.env.DATABASE_URL, function(err,client,done) {
     var query_text = 'insert into users values('+user_id+',\''+username+'\');' ;
-      client.query(query_text, function(err,result) {
-        done();
-        if(err){
-          console.error(err); response.send("Error " + err);
-        }
-        else{
-          response.render('pages/db',{results: result.rows} );
-        }
-      });
+    console.log('register:query text ' + query_text );
+    console.log('register:client ' + client );
+    client.query(query_text, function(err,result) {
+      done();
+      if(err){
+        console.error(err); response.send("Error " + err);
+      }
+      else{
+        response.render('pages/db',{results: result.rows} );
+      }
+    });
   });
 }
 
 function register_action (user_id,action){
   pg.connect(process.env.DATABASE_URL, function(err,client,done){
     var query_text = 'insert into habits values('+user_id+',\'now\',\''+action+'\');';
-    console.log(client);
+    console.log('action:query text ' + query_text );
+    console.log('action:client ' + client );
     client.query(query_text, function(err,result){
       done();
       if(err){
