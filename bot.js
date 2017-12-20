@@ -97,7 +97,17 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
 problema: registrazione stesso dato due volte.
 inserire eccezione stesso utente
 
- */
+*/
+
+
+/*************************************
+
+COLPA DI GABRIELE
+
+response non va bene: vedere guida
+
+*************************************/
+
 function register_user (user_id,username){
   pg.connect(process.env.DATABASE_URL, function(err,client,done) {
     var query_text = 'insert into users values('+user_id+',\''+username+'\');' ;
@@ -106,10 +116,10 @@ function register_user (user_id,username){
     client.query(query_text, function(err,result) {
       done();
       if(err){
-        console.error(err); //response.send("Error " + err);
+        console.error(err); //response.send("Error " + err); ////////////////////////////// response
       }
       else{
-        response.render('pages/db',{results: result.rows} );
+        response.render('pages/db',{results: result.rows} ); ///////////////////////////// response
       }
     });
   });
@@ -123,10 +133,10 @@ function register_action (user_id,action){
     client.query(query_text, function(err,result){
       done();
       if(err){
-        console.error(err); //response.send("Error " + err);
+        console.error(err); //response.send("Error " + err); ///////////////////////////// response
       }
       else{
-        response.render('pages/db',{results: result.rows} );
+        response.render('pages/db',{results: result.rows} ); ///////////////////////////// response
       }
     });
   });
