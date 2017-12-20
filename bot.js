@@ -119,7 +119,7 @@ function register_user (user_id,username){
         console.error(err); //response.send("Error " + err); ////////////////////////////// response
       }
       else{
-        response.render('pages/db',{results: result.rows} ); ///////////////////////////// response
+        console.log('register: ok');//response.render('pages/db',{results: result.rows} ); ///////////////////////////// response
       }
     });
   });
@@ -136,7 +136,7 @@ function register_action (user_id,action){
         console.error(err); //response.send("Error " + err); ///////////////////////////// response
       }
       else{
-        response.render('pages/db',{results: result.rows} ); ///////////////////////////// response
+        console.log('action: ok');//response.render('pages/db',{results: result.rows} ); ///////////////////////////// response
       }
     });
   });
