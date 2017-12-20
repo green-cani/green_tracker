@@ -106,7 +106,7 @@ function register_user (user_id,username){
     client.query(query_text, function(err,result) {
       done();
       if(err){
-        console.error(err); response.send("Error " + err);
+        console.error(err); //response.send("Error " + err);
       }
       else{
         response.render('pages/db',{results: result.rows} );
@@ -123,7 +123,7 @@ function register_action (user_id,action){
     client.query(query_text, function(err,result){
       done();
       if(err){
-        console.error(err); response.send("Error " + err);
+        console.error(err); //response.send("Error " + err);
       }
       else{
         response.render('pages/db',{results: result.rows} );
