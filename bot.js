@@ -91,6 +91,9 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
     bot.editMessageText(text, opts);
     bot.sendMessage(msg.chat.id, "Select option", option);
   }
+  if (action === 'query_trial'){
+    print_names();
+  }
 });
 
 /*
