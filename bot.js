@@ -94,19 +94,19 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
 });
 
 /*
-problema: registrazione stesso dato due volte.
-inserire eccezione stesso utente
+   problema: registrazione stesso dato due volte.
+   inserire eccezione stesso utente
 
 */
 
 
 /*************************************
 
-COLPA DI GABRIELE
+  COLPA DI GABRIELE // mannaggia
 
-response non va bene: vedere guida
+  response non va bene: vedere guida
 
-*************************************/
+ *************************************/
 
 function register_user (user_id,username){
   pg.connect(process.env.DATABASE_URL, function(err,client,done) {
@@ -138,6 +138,20 @@ function register_action (user_id,action){
       else{
         console.log('action: ok');//response.render('pages/db',{results: result.rows} ); ///////////////////////////// response
       }
+    });
+  });
+}
+
+function print_names(){
+  app.get('/db', function (request, response) {
+    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
+      client.query('SELECT * FROM users', function(err, result) {
+        done();
+        if (err)
+        { console.error(err); }
+        else
+        { console.log(results); }//response.render('pages/db', {results: result.rows} ); }
+      });
     });
   });
 }
