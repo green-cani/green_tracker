@@ -28,7 +28,7 @@ var option = {
       [{ text: '! First time? !', callback_data: 'register_user' }],
       [{ text: 'dummy', callback_data: 'dummy' }],
       [{ text: 'joke', callback_data: 'joke' }],
-      [{ text: 'Write ids', callback_data: 'query_try' }],
+      [{ text: 'Write ids', callback_data: 'query_trial' }],
       [{ text: 'END', callback_data: 'end' }]
     ]
   })
