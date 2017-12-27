@@ -92,6 +92,7 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
     bot.sendMessage(msg.chat.id, "Select option", option);
   }
   if (action === 'query_trial'){
+    bot.sendMessage(msg.chat.id, "query_trial");
     print_names();
   }
 });
@@ -153,7 +154,7 @@ function print_names(){
         if (err)
         { console.error(err); }
         else
-        { console.log(results); }//response.render('pages/db', {results: result.rows} ); }
+        { console.log(results); }
       });
     });
   });
