@@ -91,7 +91,7 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
     bot.editMessageText(text, opts);
     bot.sendMessage(msg.chat.id, "Select option", option);
   }
-  if (action === 'query_trial'){
+  if (action === 'query_trial') {
     bot.sendMessage(msg.chat.id, "query_trial");
     print_names();
   }
@@ -100,16 +100,12 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
 /*
    problema: registrazione stesso dato due volte.
    inserire eccezione stesso utente
-
-*/
+   */
 
 
 /*************************************
-
   COLPA DI GABRIELE // mannaggia
-
   response non va bene: vedere guida
-
  *************************************/
 
 function register_user (user_id,username){
@@ -147,15 +143,21 @@ function register_action (user_id,action){
 }
 
 function print_names(){
-  app.get('/db', function (request, response) {
-    pg.connect(process.env.DATABASE_URL, function(err, client, done) {
-      client.query('SELECT * FROM users', function(err, result) {
-        done();
-        if (err)
-        { console.error(err); }
-        else
-        { console.log(results); }
-      });
-    });
+  const { Client } = require('pg');
+
+  const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
   });
+
+  client.connect();
+
+  client.query('SELECT * FROM users;', (err, res) => {
+    if (err) throw err;
+    for (let row of res.rows) {
+      console.log(JSON.stringify(row));
+    }
+    client.end();
+  });
+
 }
