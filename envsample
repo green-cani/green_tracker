@@ -1,0 +1,5 @@
+DATABASE_URL='postgres://greentracker:greentrackerpw@localhost/greentrackerdb'
+DB_NAME='greentrackerdb'
+DB_USER='greentracker'
+DB_PW='greentrackerpw'
+
