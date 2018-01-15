@@ -98,15 +98,15 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
 });
 
 /*
-   problema: registrazione stesso dato due volte.
-   inserire eccezione stesso utente
-   */
+  problema: registrazione stesso dato due volte.
+  inserire eccezione stesso utente
+*/
 
 
 /*************************************
   COLPA DI GABRIELE // mannaggia
   response non va bene: vedere guida
- *************************************/
+*************************************/
 
 function register_user (user_id,username){
   pg.connect(process.env.DATABASE_URL, function(err,client,done) {
