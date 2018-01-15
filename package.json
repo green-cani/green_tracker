@@ -1,17 +1,21 @@
 {
   "name": "green-tracker",
   "version": "1.0.0",
-  "description": "http://mvalipour.github.io/node.js/2015/11/10/build-telegram-bot-nodejs-heroku",
+  "description": "",
   "main": "index.js",
-  "scripts": {
-    "start": "node index.js",
+  "scripts": {    
+    "migrate": "knex migrate:latest",
+    "start": "npm run migrate && node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
-  "license": "ISC",
+  "author": "https://github.com/green-cani",
+  "license": "none",
   "dependencies": {
+    "dotenv": "^4.0.0",
     "express": "^4.16.2",
     "node-telegram-bot-api": "^0.29.0",
-    "pg": "6.x"
+    "knex": "^0.13.0",
+    "pg": "^6.4.2"
   }
 }
+
