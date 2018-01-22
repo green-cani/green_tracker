@@ -21,6 +21,13 @@ create table if not exists habits(
   foreign key (user_id) references users (user_id),
   time timestamp without time zone,
   choice varchar(10)
-);
+);"
+
+psql -h localhost -U $DB_USER -d $DB_NAME -c \
+"
 select * from users;
-select * from habits;"
+"
+psql -h localhost -U $DB_USER -d $DB_NAME -c \
+"
+select * from habits;
+"
