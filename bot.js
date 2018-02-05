@@ -5,8 +5,6 @@ var Bot = require('node-telegram-bot-api'),
 
 var pg = require('pg');
 
-menu_main_list = ['register_user','query_trial'];
-
 var action_register_user = {
   requires: [],
   button: [{ text: '! First time? !', callback_data: 'register_user' }],
@@ -23,19 +21,25 @@ var action_query_trial = {
   text: "eseguo azione register_user"
 }
 
+menu_main_list = [action_register_user,action_query_trial]; // ACHTUNG! we must choose a convention: files/names/titles/... to be listed? I chose names as they are easier to parse later (not having to remove ".js") BUT problems when calling objects, so switched to objects
 
-
-var option = {
-  ik_arr = [];
-  for(a in menu_main_list){
-    ik_arr.push(a.button);
-  }
-  reply_markup: JSON.stringify({ inline_keyboard: ik_arr })
+// returns object with array of buttons
+var option = function(ik_arr){
+  return { reply_markup: JSON.stringify({ inline_keyboard: ik_arr }) };
 };
 
+
 bot.onText(/^\/start$/, function (msg, match){
+  //loads buttons data from menu list
+  var ik_arr = [];
+  for(a in menu_main_list){
+    console.log(menu_main_list[a]);
+    ik_arr.push((menu_main_list[a]).button);
+  }
+  console.log(ik_arr);
+
   bot.sendMessage(msg.chat.id, 'START!').then(function () {
-    bot.sendMessage(msg.chat.id, "Select option", option);
+    bot.sendMessage(msg.chat.id, "Select option", option(ik_arr));
   });
 });
 
@@ -52,11 +56,11 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
     bot.editMessageText(text, opts);
     bot.sendMessage(msg.chat.id, "END");
   }
-    if (action === 'register_user') {
+  if (action === 'register_user') {
     register_user(callbackQuery.from.id,callbackQuery.from.username);
     text = 'Now registering your name :)';
-    bot.editMessageText(text, opts);
-    bot.sendMessage(msg.chat.id, "Select option", option);
+bot.editMessageText(text, opts);
+bot.sendMessage(msg.chat.id, "Select option", option);
   }
   if (action === 'dummy'){
     register_action(callbackQuery.from.id,'dummy');
