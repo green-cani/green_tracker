@@ -1,0 +1,38 @@
+/////////// 
+menu_i.js
+/////////// crea e gestisce il menu i
+[...]
+// crea elenco bottoni
+for(action_name in menu_i_list){
+  var a = require('actions/action_name');
+  inline_keyboard.push(a.button);
+}
+[...]
+// loop di if sulle callback
+for(action_name in menu_i_list)
+{
+  var a = require('actions/action_name');
+  if(callback === a.callback){
+    a.action();
+    text = a.text;
+    [...]
+  }
+}
+
+
+//////////
+azione_a.js
+////////// oggetto dell'azione
+azione_a = {
+  requires: ['...','...'], //elenco dipendenze
+  button: [{ text: 'A', callback_data: 'a_cbk'}], 
+  action: function(callbackQuery){ f(callbackQuery.x); g(callbackQuery.y); },
+  text: "Eseguo azione A"
+}
+
+
+////////
+menu_i_list.js
+//////// 
+menu_i_list = ['azione_a','azione_b',...];
+

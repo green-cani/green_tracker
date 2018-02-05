@@ -4,34 +4,33 @@ var Bot = require('node-telegram-bot-api'),
     bot = new Bot(token, { polling: true } );
 
 var pg = require('pg');
-// event listener
-bot.onText(/^\/say_hello (.+)$/, function(msg, match){
-  var name = match[1];
-  bot.sendMessage(msg.chat.id, 'Hello ' + name + '!').then(function () {
-    // reply sent!
-  });
-});
 
-bot.onText(/^\/sum((\s+\d+)+)$/, function (msg, match) {
-  var result = 0;
-  match[1].trim().split(/\s+/).forEach(function (i) {
-    result += (+i || 0);
-  })
-  bot.sendMessage(msg.chat.id, result).then(function () {
-    // reply sent!
-  });
-});
+menu_main_list = ['register_user','query_trial'];
+
+var action_register_user = {
+  requires: [],
+  button: [{ text: '! First time? !', callback_data: 'register_user' }],
+  callback: 'register_user',
+  action: function (callbackQuery){ register_user(callbackQuery.from.id,callbackQuery.from.username); },
+  text: "eseguo azione register_user"
+}
+
+var action_query_trial = {
+  requires: [],
+  button: [{ text: 'Query trial', callback_data: 'query_trial' }],
+  callback: 'query_trial',
+  action: function (callbackQuery){ print_names();  },
+  text: "eseguo azione register_user"
+}
+
+
 
 var option = {
-  reply_markup: JSON.stringify({
-    inline_keyboard: [
-      [{ text: '! First time? !', callback_data: 'register_user' }],
-      [{ text: 'dummy', callback_data: 'dummy' }],
-      [{ text: 'joke', callback_data: 'joke' }],
-      [{ text: 'Write ids', callback_data: 'query_trial' }],
-      [{ text: 'END', callback_data: 'end' }]
-    ]
-  })
+  ik_arr = [];
+  for(a in menu_main_list){
+    ik_arr.push(a.button);
+  }
+  reply_markup: JSON.stringify({ inline_keyboard: ik_arr })
 };
 
 bot.onText(/^\/start$/, function (msg, match){
@@ -53,22 +52,7 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
     bot.editMessageText(text, opts);
     bot.sendMessage(msg.chat.id, "END");
   }
-  if (action === '1') {
-    text = 'You hit button 1';
-    bot.editMessageText(text, opts);
-    bot.sendMessage(msg.chat.id, "Select option", option);
-  }
-  if (action === '2') {
-    text = 'You hit button 2';
-    bot.editMessageText(text, opts);
-    bot.sendMessage(msg.chat.id, "Select option", option);
-  }
-  if (action === '3') {
-    text = 'You hit button 3';
-    bot.editMessageText(text, opts);
-    bot.sendMessage(msg.chat.id, "Select option", option);
-  }
-  if (action === 'register_user') {
+    if (action === 'register_user') {
     register_user(callbackQuery.from.id,callbackQuery.from.username);
     text = 'Now registering your name :)';
     bot.editMessageText(text, opts);
@@ -86,27 +70,11 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
     bot.editMessageText(text,opts);
     bot.sendMessage(msg.chat.id,"Select option",option);
   }
-  if (action === 'write_ids') {
-    text = 'chat_id' + callbackQuery.from.id + "\nmessage_id" + callbackQuery.from.username;
-    bot.editMessageText(text, opts);
-    bot.sendMessage(msg.chat.id, "Select option", option);
-  }
   if (action === 'query_trial') {
     bot.sendMessage(msg.chat.id, "query_trial");
     print_names();
   }
 });
-
-/*
-  problema: registrazione stesso dato due volte.
-  inserire eccezione stesso utente
-*/
-
-
-/*************************************
-  COLPA DI GABRIELE // mannaggia
-  response non va bene: vedere guida
-*************************************/
 
 function register_user (user_id,username){
   pg.connect(process.env.DATABASE_URL, function(err,client,done) {
