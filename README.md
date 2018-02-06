@@ -27,6 +27,7 @@ If a task is big, you can (and should) separate it into smaller tasks, and assig
 ### Braid scheme
 To make the teamwork more efficient, let's stick to a braid-like scheme:
 ![Braid scheme](/images/braid.jpg)
+
 2 people at a time will work together on a **big task**, while the other member will work alone on a **small task**. From time to time (for example, upon completions of tasks), the 'outsider' and one of the 'insiders' will swap place, new teams will be formed, and new tasks will be assigned.
 
 Examples of **big tasks**:
