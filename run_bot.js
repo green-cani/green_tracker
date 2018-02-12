@@ -24,84 +24,100 @@ bot.onText(/^\/start$/, function (msg, match){
   //loads buttons data from menu list
   var ik_arr = [];
   for(a in main_menu_actions_list){
-    console.log(main_menu_actions_list[a]);
+    console.log(main_menu_actions_list);
     ik_arr.push((main_menu_actions_list[a]).button);
   }
   console.log(ik_arr);
   // ...Print initialization text, then ...
   // note how the instructions given to the bot are just chained methods,
-  // with syntax: firs_instruction.then(second_instruction)
+  // with syntax: first_instruction.then(second_instruction)
   bot.sendMessage(msg.chat.id, 'START!').then(function () {
     // ... prompt the menu with buttons (the json 'menu')
     bot.sendMessage(msg.chat.id, "Select option", option(ik_arr));
     /* from now on, when a user will click on a button,
-    the relative callback will be called. See below for
-    how the callbacks are handled */
+       the relative callback will be called. See below for
+       how the callbacks are handled */
   });
 });
 
-// how should the bot handle the callbacks?
-/* The structure of the next block is:
-bot.on('callback_query', do_a_lot_of_stuff)
-Each block of type if(action === 'some_name') ...
-describes the behavior of the bot in response to
-the activation of the callback named 'some_name' */
+/* 
+ * how should the bot handle the callbacks?
+ * 
+ * The structure of the next block is:
+ * bot.on('callback_query', do_a_lot_of_stuff)
+ * Each block of type if(action === 'some_name') ...
+ * describes the behavior of the bot in response to
+ * the activation of the callback named 'some_name' 
+ */
 bot.on('callback_query', function onCallbackQuery(callbackQuery) {
-                                    const action = callbackQuery.data;
-                                    const msg = callbackQuery.message;
-                                    const opts = {
-                                      chat_id: msg.chat.id,
-                                      message_id: msg.message_id,
-                                    };
+  const action = callbackQuery.data;
+  const msg = callbackQuery.message;
+  const opts = {
+    chat_id: msg.chat.id,
+    message_id: msg.message_id,
+  };
   var text;
-  // if the button with callback 'register_user' was clicked, register the user
-  if (action === callbackname) {
-    do_stuff
-    text = callbacktext
-
+  /*
+   * if the button with callback 'register_user' was clicked, register the user
+   *
+   * if (action === callbackname) {
+   *   do_stuff
+   *   text = callbacktext
+   * }
+   *
+   */
+  var this_action;
+  for(i in main_menu_actions_list){
+    this_action = main_menu_actions_list[i];
+    this_button = this_action.button;
+    console.log("this action button", this_button);
+    if(action === this_button[0].callback_data){
+      this_action.action();
+      text = this_action.text;
+    }
   }
-  if (action === 'end') {
+  /*if (action === 'end') {
     text = 'Ended';
     bot.editMessageText(text, opts);
     bot.sendMessage(msg.chat.id, "END");
-  }
-  if (action === '1') {
+    }
+    if (action === '1') {
     text = 'You hit button 1';
     bot.editMessageText(text, opts);
     bot.sendMessage(msg.chat.id, "Select option", option);
-  }
-  if (action === '2') {
+    }
+    if (action === '2') {
     text = 'You hit button 2';
     bot.editMessageText(text, opts);
     bot.sendMessage(msg.chat.id, "Select option", option);
-  }
-  if (action === '3') {
+    }
+    if (action === '3') {
     text = 'You hit button 3';
     bot.editMessageText(text, opts);
     bot.sendMessage(msg.chat.id, "Select option", option);
-  }
+    }
 
-  if (action === 'dummy'){
+    if (action === 'dummy'){
     register_action(callbackQuery.from.id,'dummy');
     text = 'Sto registrando...';
     bot.editMessageText(text,opts);
     bot.sendMessage(msg.chat.id,"Select option",option);
-  }
-  if (action === 'joke'){
+    }
+    if (action === 'joke'){
     register_action(callbackQuery.from.id,'joke');
     text = 'Sto registrando...';
     bot.editMessageText(text,opts);
     bot.sendMessage(msg.chat.id,"Select option",option);
-  }
-  if (action === 'write_ids') {
+    }
+    if (action === 'write_ids') {
     text = 'chat_id' + callbackQuery.from.id + "\nmessage_id" + callbackQuery.from.username;
     bot.editMessageText(text, opts);
     bot.sendMessage(msg.chat.id, "Select option", option);
-  }
-  if (action === 'query_trial') {
+    }
+    if (action === 'query_trial') {
     bot.sendMessage(msg.chat.id, "query_trial");
     print_names();
-  }
+    }*/
 });
 
 function register_user (user_id,username){
@@ -136,6 +152,10 @@ function register_action (user_id,action){
       }
     });
   });
+}
+
+function register_habit(){
+  console.log("register habit");
 }
 
 function print_names(){
