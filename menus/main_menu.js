@@ -20,4 +20,4 @@ for(i in module_list){
 }
 // export actions list, so that you can access the menu_actions_list
 // from the extern with: require('./NAMEOFTHISMODULE').menu_actions_list
-exports.menu_actions_list = menu_actions_list
+exports.menu_actions_list = menu_actions_list;
