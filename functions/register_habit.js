@@ -1,6 +1,6 @@
-const {Client} = require('pg');
+const pg = require('pg');
 
-function register_action (user_id,action){
+function register_habit (user_id,action){
   pg.connect(process.env.DATABASE_URL, function(err,client,done){
     var query_text = 'insert into habits values('+user_id+',\'now\',\''+action+'\');';
     console.log('action:query text ' + query_text );
@@ -17,4 +17,4 @@ function register_action (user_id,action){
   });
 }
 
-module.exports = { register_action };
+module.exports = { register_habit };

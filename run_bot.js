@@ -72,7 +72,7 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
     this_button = this_action.button;
     console.log("this action button", this_button);
     if(action === this_button[0].callback_data){
-      this_action.action();
+      this_action.action(callbackQuery);
       text = this_action.text;
     }
   }
