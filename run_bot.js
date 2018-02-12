@@ -11,7 +11,7 @@
 var bot = require('./create_bot').bot;
 
 // import main menu by importing its actions list
-var main_menu_actions_list = require('./main_menu').menu_actions_list;
+var main_menu_actions_list = require('./menus/main_menu').menu_actions_list;
 
 // this functions formats the actions_list for a menu into
 // a format that Telegram' API sendMessage() understands

@@ -10,7 +10,7 @@ var module_names = ['action_register_user','action_query_trial'];
 // import modules
 var module_list = [];
 for(i in module_names){
-  module_list.push(require('./' + module_names[i]));
+  module_list.push(require('../actions/' + module_names[i]));
 }
 // extract actions list (each action is an object
 // corresponding to a button with its own functionality
