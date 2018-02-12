@@ -1,10 +1,10 @@
 # TO DO
-- [ ] Put actions in a actions directory, menus in a menus directory, etc.
+- [x] Put actions in a actions directory, menus in a menus directory, etc.
 - [ ] Implement the question menu (as the main menu. Optional: refactor the code in such a way of just having to write a list of names for defining a menu, without duplicating the 'menu generating' part of the code)
 - [ ] Implement the button actions for the main menu and the question menu
 - [ ] Delete bot token from create_token, and correctly set it on heroku (see https://github.com/volodymyrlut/heroku-node-telegram-bot)
 - [ ] How to implement tests using testing libraries
-- [ ] Write "if action ==== ..." part of the callbacks in run_bot.js
+- [x] Write "if action ==== ..." part of the callbacks in run_bot.js
 - [x] Structure for button actions as separate, importable files
 - [x] Structure for menus as separate, importable files
 - [x] Separate logic for bot's creation, bot's behavior, menus, and actions
@@ -46,4 +46,3 @@ Remember to comment and document what you write! You will certainly lose time, b
 After a new part was implemented, write tests for testing the functionalities of that component! (A time-saving advice is: start writing tests at the same time (or even before) of writing the main implementation)
 After that, run the tests!
 ![Testing cycle](/images/testing.png)
-
