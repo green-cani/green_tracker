@@ -4,7 +4,7 @@
 // that you want to use for your menu.
 // USAGE: access the menu_actions_list from the extern with:
 // require('./NAMEOFTHISMODULE').menu_actions_list
-var module_names = ['action_register_user','action_query_trial'];
+var module_names = ['action_register_user','action_query_trial', 'action_register_hab'];
 
 // DO NOT MODIFY ANYTHING UNDER THIS
 // import modules

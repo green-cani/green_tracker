@@ -1,3 +1,6 @@
+/*
+ * Regster user action
+ */
 var action = {
   requires: [],
   button: [{ text: '! First time? !', callback_data: 'register_user' }],
