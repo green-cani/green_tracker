@@ -11,43 +11,45 @@
 var bot = require('./create_bot').bot;
 
 // import main menu by importing its actions list
-var main_menu_actions_list = require('./menus/main_menu').menu_actions_list;
+//var main_menu_actions_list = require('./menus/main_menu').menu_actions_list;
+// RACCOGLI TUTTE LE AZIONI
+var createMenu = require('./createMenu').createMenu;
+var main_menu_actions_list = createMenu(['action_register_user','action_query_trial', 'action_register_hab']);
 
 // this functions formats the actions_list for a menu into
 // a format that Telegram' API sendMessage() understands
-var option = function(ik_arr){
-  return { reply_markup: JSON.stringify({ inline_keyboard: ik_arr }) };
+var option = function(buttons_list){
+  return { reply_markup: JSON.stringify({ inline_keyboard: buttons_list }) };
 };
 
 // when a user types /start, do something...
 bot.onText(/^\/start$/, function (msg, match){
   //loads buttons data from menu list
-  var ik_arr = [];
+  var buttons_list = [];
   for(a in main_menu_actions_list){
-    console.log(main_menu_actions_list);
-    ik_arr.push((main_menu_actions_list[a]).button);
+    buttons_list.push((main_menu_actions_list[a]).button);
   }
-  console.log(ik_arr);
+
   // ...Print initialization text, then ...
   // note how the instructions given to the bot are just chained methods,
   // with syntax: first_instruction.then(second_instruction)
   bot.sendMessage(msg.chat.id, 'START!').then(function () {
     // ... prompt the menu with buttons (the json 'menu')
-    bot.sendMessage(msg.chat.id, "Select option", option(ik_arr));
+    bot.sendMessage(msg.chat.id, "Select option", option(buttons_list));
     /* from now on, when a user will click on a button,
        the relative callback will be called. See below for
        how the callbacks are handled */
   });
 });
 
-/* 
+/*
  * how should the bot handle the callbacks?
- * 
+ *
  * The structure of the next block is:
  * bot.on('callback_query', do_a_lot_of_stuff)
  * Each block of type if(action === 'some_name') ...
  * describes the behavior of the bot in response to
- * the activation of the callback named 'some_name' 
+ * the activation of the callback named 'some_name'
  */
 bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   const action = callbackQuery.data;
@@ -70,10 +72,10 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   for(i in main_menu_actions_list){
     this_action = main_menu_actions_list[i];
     this_button = this_action.button;
-    console.log("this action button", this_button);
     if(action === this_button[0].callback_data){
       this_action.action(callbackQuery);
       text = this_action.text;
+      console.log("used action: " + text);
     }
   }
   /*if (action === 'end') {
