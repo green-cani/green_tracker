@@ -14,32 +14,17 @@ var bot = require('./create_bot').bot;
 //var main_menu_actions_list = require('./menus/main_menu').menu_actions_list;
 // RACCOGLI TUTTE LE AZIONI
 var createMenu = require('./createMenu').createMenu;
-var main_menu_actions_list = createMenu(['action_register_user','action_query_trial', 'action_register_hab']);
-
-// this functions formats the actions_list for a menu into
-// a format that Telegram' API sendMessage() understands
-var option = function(buttons_list){
-  return { reply_markup: JSON.stringify({ inline_keyboard: buttons_list }) };
-};
+// var main_menu_actions_list = createMenu(['action_register_user','action_query_trial', 'action_register_hab']);
+//
+// // this functions formats the actions_list for a menu into
+// // a format that Telegram' API sendMessage() understands
+// var option = function(buttons_list){
+//   return { reply_markup: JSON.stringify({ inline_keyboard: buttons_list }) };
+// };
 
 // when a user types /start, do something...
 bot.onText(/^\/start$/, function (msg, match){
-  //loads buttons data from menu list
-  var buttons_list = [];
-  for(a in main_menu_actions_list){
-    buttons_list.push((main_menu_actions_list[a]).button);
-  }
-
-  // ...Print initialization text, then ...
-  // note how the instructions given to the bot are just chained methods,
-  // with syntax: first_instruction.then(second_instruction)
-  bot.sendMessage(msg.chat.id, 'START!').then(function () {
-    // ... prompt the menu with buttons (the json 'menu')
-    bot.sendMessage(msg.chat.id, "Select option", option(buttons_list));
-    /* from now on, when a user will click on a button,
-       the relative callback will be called. See below for
-       how the callbacks are handled */
-  });
+  createMenu(msg, ['action_register_user','action_query_trial', 'action_register_hab'], "START");
 });
 
 /*

@@ -1,13 +1,15 @@
-function createMenu(module_names, menu_msg){
 
-  
+// msg_obj : msg from callback function(msg, match) in bot.onText()
+function createMenu(msg_obj, module_names, menu_msg){
+
+
   // List of actual actions from actions names list
   // requires the actions knowing the names and pushes into module_list
   var module_list = [];
   for(i in module_names){
     module_list.push(require('./actions/' + module_names[i]));
   }
-  
+
 
   // extract actions list (each action is an object
   // corresponding to a button with its own functionality)
@@ -27,11 +29,12 @@ function createMenu(module_names, menu_msg){
     buttons_list.push((menu_actions_list[a]).button);
   }
 
-  // Prints menu 
-  bot.sendMessage(msg.chat.id, menu_msg, option(buttons_list));
+  var bot = require('./create_bot').bot;
+  // Prints menu
+  bot.sendMessage(msg_obj.chat.id, menu_msg, option(buttons_list));
   /* From now on, when a user will click on a button,
    * the relative callback will be called.
-   *  
+   *
    * Callbacks are handled with bot.on('callback_query',...
    */
 
