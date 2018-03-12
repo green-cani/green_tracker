@@ -1,6 +1,6 @@
 const pg = require('pg');
 
-function print_names (){
+function F (){
     const { Client } = require('pg');
 
     const client = new Client({
@@ -19,4 +19,4 @@ function print_names (){
     });
 }
 
-module.exports = { print_names };
+module.exports = { F };

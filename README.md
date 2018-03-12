@@ -1,8 +1,8 @@
 # TO DO
-- [ ] Check if including create_bot into functions creates problems by instantiating the bot more than once
-- [ ] Delete bot token from create_token, and correctly set it on heroku (see https://github.com/volodymyrlut/heroku-node-telegram-bot)
+- [x] Check if including create_bot into functions creates problems by instantiating the bot more than once
+- [x] Delete bot token from create_token, and correctly set it on heroku (see https://github.com/volodymyrlut/heroku-node-telegram-bot)
 - [ ] How to implement tests using testing libraries
-- [ ] Implement the question menu (as the main menu. Optional: refactor the code in such a way of just having to write a list of names for defining a menu, without duplicating the 'menu generating' part of the code)
+- [x] Implement the question menu (as the main menu. Optional: refactor the code in such a way of just having to write a list of names for defining a menu, without duplicating the 'menu generating' part of the code)
 - [x] Reorganized bot callbacks using all actions
 - [x] Put actions in a actions directory, menus in a menus directory, etc.
 - [x] Implement the button actions for the main menu and the question menu

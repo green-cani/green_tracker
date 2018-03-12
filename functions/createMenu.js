@@ -7,7 +7,7 @@ function createMenu(msg_obj, module_names, menu_msg){
   // requires the actions knowing the names and pushes into module_list
   var module_list = [];
   for(i in module_names){
-    module_list.push(require('./actions/' + module_names[i]));
+    module_list.push(require('../actions/' + module_names[i]));
   }
 
 
@@ -29,7 +29,7 @@ function createMenu(msg_obj, module_names, menu_msg){
     buttons_list.push((menu_actions_list[a]).button);
   }
 
-  var bot = require('./create_bot').bot;
+  var bot = require('../create_bot').bot;
   // Prints menu
   bot.sendMessage(msg_obj.chat.id, menu_msg, option(buttons_list));
   /* From now on, when a user will click on a button,

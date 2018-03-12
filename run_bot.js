@@ -10,17 +10,12 @@
 // import bot
 var bot = require('./create_bot').bot;
 
+
 // import main menu by importing its actions list
 //var main_menu_actions_list = require('./menus/main_menu').menu_actions_list;
 // RACCOGLI TUTTE LE AZIONI
-var createMenu = require('./createMenu').createMenu;
-// var main_menu_actions_list = createMenu(['action_register_user','action_query_trial', 'action_register_hab']);
-//
-// // this functions formats the actions_list for a menu into
-// // a format that Telegram' API sendMessage() understands
-// var option = function(buttons_list){
-//   return { reply_markup: JSON.stringify({ inline_keyboard: buttons_list }) };
-// };
+var createMenu = require('./functions/createMenu').createMenu;
+
 
 // when a user types /start, do something...
 bot.onText(/^\/start$/, function (msg, match){
@@ -50,15 +45,17 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   var actionsFolder = './actions';
   var fs = require('fs');
   fs.readdirSync(actionsFolder).forEach(
-    function (item, index){
-      actionList.push(require('./actions/' + item.slice(0,-3)).action);
-    }
-  )
+      function (item, index){
+        if( item.slice(-3) === ".js"){
+          actionList.push(require('./actions/' + item.slice(0,-3)).action);
+        }
+      }
+      )
 
-  // callback for all possible actions
-  var this_action;
+    // callback for all possible actions
+    var this_action;
   for(i in actionList){
-    this_action = main_menu_actions_list[i];
+    this_action = actionList[i];
     this_button = this_action.button;
     if(action === this_button[0].callback_data){
       this_action.action(callbackQuery);
@@ -68,62 +65,3 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   }
 });
 
-/*
-function register_user (user_id,username){
-  pg.connect(process.env.DATABASE_URL, function(err,client,done) {
-    var query_text = 'insert into users values('+user_id+',\''+username+'\');' ;
-    console.log('register:query text ' + query_text );
-    console.log('register:client ' + client );
-    client.query(query_text, function(err,result) {
-      done();
-      if(err){
-        console.error(err); //response.send("Error " + err); ////////////////////////////// response
-      }
-      else{
-        console.log('register: ok');//response.render('pages/db',{results: result.rows} ); ///////////////////////////// response
-      }
-    });
-  });
-}
-
-function register_action (user_id,action){
-  pg.connect(process.env.DATABASE_URL, function(err,client,done){
-    var query_text = 'insert into habits values('+user_id+',\'now\',\''+action+'\');';
-    console.log('action:query text ' + query_text );
-    console.log('action:client ' + client );
-    client.query(query_text, function(err,result){
-      done();
-      if(err){
-        console.error(err); //response.send("Error " + err); ///////////////////////////// response
-      }
-      else{
-        console.log('action: ok');//response.render('pages/db',{results: result.rows} ); ///////////////////////////// response
-      }
-    });
-  });
-}
-
-function register_habit(){
-  console.log("register habit");
-}
-
-function print_names(){
-  const { Client } = require('pg');
-
-  const client = new Client({
-    connectionString: process.env.DATABASE_URL,
-    ssl: true,
-  });
-
-  client.connect();
-
-  client.query('SELECT * FROM users;', (err, res) => {
-    if (err) throw err;
-    for (let row of res.rows) {
-      console.log(JSON.stringify(row));
-    }
-    client.end();
-  });
-
-}
-*/

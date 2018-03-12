@@ -2,13 +2,15 @@
  * Register Habits action
  */
 
-var register_habit = require("../functions/register_habit").register_habit;
-
+var createMenu = require('../functions/createMenu').createMenu;
 
 var action = {
     requires : [],
     button : [{ text: 'Register Habit', callback_data: 'register_hab'}],
-    action: function(callbackQuery){ register_habit(callbackQuery.from.id,'dummy'); },
+    action: function(callbackQuery){ 
+      var msgId = callbackQuery.message;
+      createMenu(msgId,['action_hab_bike','action_hab_car','action_hab_feet','action_hab_train'],"Scegli l'azione");
+    },
     text: 'eseguo azione register habit'
 }
 exports.action = action;
