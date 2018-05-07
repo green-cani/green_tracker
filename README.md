@@ -1,4 +1,5 @@
 # TO DO
+- [ ] change access to db through rest api (django manages the db)
 - [ ] How to implement tests using testing libraries
 - [ ] Make sure knex migrations work
 - [ ] Insert control to avoid error of 'duplicate key' in register user
