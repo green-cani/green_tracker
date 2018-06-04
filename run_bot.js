@@ -10,12 +10,10 @@
 // import bot
 var bot = require('./create_bot').bot;
 
-
 // import main menu by importing its actions list
 //var main_menu_actions_list = require('./menus/main_menu').menu_actions_list;
 // RACCOGLI TUTTE LE AZIONI
 var createMenu = require('./functions/createMenu').createMenu;
-
 
 // when a user types /start, do something...
 bot.onText(/^\/start$/, function (msg, match){
@@ -45,15 +43,15 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   var actionsFolder = './actions';
   var fs = require('fs');
   fs.readdirSync(actionsFolder).forEach(
-      function (item, index){
-        if( item.slice(-3) === ".js"){
-          actionList.push(require('./actions/' + item.slice(0,-3)).action);
-        }
+    function (item, index){
+      if( item.slice(-3) === ".js"){
+        actionList.push(require('./actions/' + item.slice(0,-3)).action);
       }
-      )
+    }
+  )
 
-    // callback for all possible actions
-    var this_action;
+  // callback for all possible actions
+  var this_action;
   for(i in actionList){
     this_action = actionList[i];
     this_button = this_action.button;
@@ -65,3 +63,9 @@ bot.on('callback_query', function onCallbackQuery(callbackQuery) {
   }
 });
 
+function wakeup_analyzer()
+{
+  var xhr = new XMLHttpRequest();
+  xhr.open('GET', "https://green-tracker-analyzer.herokuapp.com/", true);
+  xhr.send();
+}
