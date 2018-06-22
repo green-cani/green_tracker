@@ -15,9 +15,15 @@ var bot = require('./create_bot').bot;
 // RACCOGLI TUTTE LE AZIONI
 var createMenu = require('./functions/createMenu').createMenu;
 
+// when /info is typed
+bot.onText(/^\/start$/, function(msg, match){
+  bot.sendMessage(msg.chat.id,"Welcome! This is GreenTrackerBot, a Telegram bot you can use to track your commuting habits (car? feet? bike - which we love?). At the same time, your habits will be collected and used to figure out how people move. Ah, don't forget: with more sustainable choices you can earn more green-points! What are you waiting for?");
+  createMenu(msg, ['action_register_user'], "In order to use GreenTrackerBot, you must register, allowing us to use your username and id to identify you. We promise not to share your identity with anyone, and we will use it just for this bot.");
+});
+
 // when a user types /start, do something...
-bot.onText(/^\/start$/, function (msg, match){
-  createMenu(msg, ['action_register_user','action_query_trial', 'action_register_hab'], "START");
+bot.onText(/^\/daily$/, function (msg, match){
+  createMenu(msg,['action_hab_bike','action_hab_car','action_hab_feet','action_hab_train'],"How will you get to school/work today?");
 });
 
 /*
