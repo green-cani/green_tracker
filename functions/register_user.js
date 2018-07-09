@@ -4,9 +4,11 @@ const xmlhr = require('xmlhttprequest');
 function F (user_id,username,chat_id){
 
   var xmlhttp = new xmlhr.XMLHttpRequest();   // new HttpRequest instance 
-  xmlhttp.open("POST", "https://b94ac74d.ngrok.io/usertable/user/", false);
+  url_to_post = "http://10.100.15.102:8000/usertable/user/"
+  xmlhttp.open("POST", url_to_post, false);
   xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
   xmlhttp.send(JSON.stringify({ uid: user_id, name: username }));
+  console.log(xmlhttp.responseText);
   var rsp = JSON.parse(xmlhttp.responseText);
   console.log(rsp);
   var st = xmlhttp.status;

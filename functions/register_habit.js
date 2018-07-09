@@ -1,23 +1,31 @@
 const pg = require('pg');
-var bot = require('../create_bot').bot;
+const xmlhr = require('xmlhttprequest');
 
-function F (user_id,habit){
-  pg.connect(process.env.DATABASE_URL, function(err,client,done){
-    var query_text = 'insert into habits values('+user_id+',\'now\',\''+habit+'\');';
-    console.log('habit:query text ' + query_text );
-    console.log('habit:client ' + client );
-    client.query(query_text, function(err,result){
-      done();
-      if(err){
-        console.error(err); 
-      }
-      else{
-        console.log('habit: ok');
-        bot.sendMessage(msg.chat.id,"You are moving with: "+habit+reaction_to_habit(habit));
-        bot.sendMessage(msg.chat.id,"You have earned "+points_to_habit(habit)+"points");
-      }
-    });
-  });
+function F (user_id,chat_id,habit){
+
+  var xmlhttp = new xmlhr.XMLHttpRequest();   // new HttpRequest instance 
+  url_to_post = "http://10.100.15.102:8000/usertable/habit/"
+  xmlhttp.open("POST", url_to_post, false);
+  xmlhttp.setRequestHeader("Content-Type", "application/json;charset=UTF-8");
+  tosend = JSON.stringify({ usr_id: user_id, choice:  habit_code(habit)});
+  console.log(tosend);
+  xmlhttp.send(tosend);
+  var rsp = JSON.parse(xmlhttp.responseText);
+  console.log(habit,"----", habit_code(habit));
+  var st = xmlhttp.status;
+  console.log(st);
+  var bot = require('../create_bot').bot;
+  if(st===201){
+    bot.sendMessage(chat_id,"Got it!");
+    bot.sendMessage(chat_id,"You are using: "+habit);
+  } else if(st===400) {
+    bot.sendMessage(chat_id,"You are already registered!");
+  }
+  else {
+    bot.sendMessage(chat_id,"Your request was unsuccessful... try again later!");
+  }
+
+
 }
 
 function reaction_to_habit(habit){
@@ -35,5 +43,18 @@ function points_to_habit(habit){
   if(habit==='car')   
     return -1;
 }
+
+function habit_code(habit){
+  if(habit==='feet')
+    return 'P';
+  if(habit==='bike')
+    return 'B';
+  if(habit==='train')
+    return 'L';
+  if(habit==='car')   
+    return 'M';
+}
+
+
 
 module.exports = { F };

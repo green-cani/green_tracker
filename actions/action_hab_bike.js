@@ -8,8 +8,9 @@ var action = {
     requires : [],
     button : [{ text: 'Bike', callback_data: 'habit_bike'}],
     action: function(callbackQuery){ 
-      console.log(callbackQuery);
-      register_habit(callbackQuery.from.id,"bike"); 
+      cbQ = callbackQuery;
+      console.log(cbQ);
+      register_habit(cbQ.from.id,cbQ.message.chat.id,"bike"); 
     },
     text: 'eseguo azione habit bike'
 }
